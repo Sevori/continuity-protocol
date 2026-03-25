@@ -2,42 +2,51 @@
 
 Continuity Protocol is a draft specification for preserving meaningful agent state across context boundaries.
 
-This repo is intentionally specification-first.
+This repository is specification-first and intentionally separates demonstrated behavior from theory and assumptions.
 
-## What is in here
+## What is here
 
-- `SPEC.md` — the main protocol specification
-- `docs/theory-sources.md` — where the theory comes from and what shaped it
-- `docs/decision-summary.md` — major editorial/spec decisions and why they were made
+- `SPEC.md` — the main specification
+- `docs/theory-sources.md` — conceptual and engineering influences behind the draft
+- `docs/decision-summary.md` — editorial and structural decisions in the spec
+- `docs/hypotheses-and-validation.md` — what appears strongly validated vs still under active validation
+- `docs/neuroscience-context.md` — cognitive and neuroscientific context used as explanatory background
+- `docs/context-engineering-comparison.md` — comparison with current context engineering patterns
+- `docs/memory-layers-and-retrieval.md` — deeper framing for memory layers, graphs, embeddings, and retrieval
+- `docs/privacy-considerations.md` — privacy posture and protocol-level privacy constraints
 
 ## Reading order
 
-If you're new, read in this order:
-
 1. `SPEC.md`
-2. `docs/theory-sources.md`
-3. `docs/decision-summary.md`
+2. `docs/hypotheses-and-validation.md`
+3. `docs/neuroscience-context.md`
+4. `docs/context-engineering-comparison.md`
+5. `docs/memory-layers-and-retrieval.md`
+6. `docs/privacy-considerations.md`
+7. `docs/theory-sources.md`
+8. `docs/decision-summary.md`
 
 ## Editorial stance
 
-This spec now separates:
+This draft distinguishes:
 
-- **Proven** — things already demonstrated in real systems
-- **Theory** — ideas that are coherent and increasingly grounded, but not fully settled
-- **Assumption** — placeholders, hypotheses, and implementation-local conventions
+- **Proven** — behavior already demonstrated in real systems
+- **Theory** — coherent claims shaped by practice, but not fully settled
+- **Assumption** — provisional conventions, hypotheses, or implementation-local choices
 
-The goal is to avoid pretending a draft protocol is already universal law.
+The goal is to make the protocol intellectually honest while keeping it useful.
 
 ## Current focus
 
-Right now the spec is centered on:
+The protocol currently focuses on:
 
 - typed continuity state
 - proof path vs control path
-- bounded/compiled continuity
-- truthful distinction between typed continuity and fallback memory
+- bounded carryover and compiled continuity
+- truthful distinction between continuity survival and fallback recovery
 - evaluation that can falsify continuity claims
+- privacy-aware continuity boundaries
 
 ## Status
 
-Draft. Intended to evolve quickly.
+Draft. Expected to evolve quickly.

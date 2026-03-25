@@ -67,7 +67,7 @@ Single-agent memory is not sufficient once several workers, agents, or sessions 
 The protocol's treatment of:
 
 - work claims
-n- conflict pressure
+- conflict pressure
 - coordination signals
 - active ownership
 

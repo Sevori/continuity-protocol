@@ -95,6 +95,12 @@ A system must not claim continuity success just because a human can still recove
 
 **Status:** Proven as a practical requirement.
 
+### 3.6 Privacy as a continuity constraint
+
+Continuity should preserve the right state across a boundary, not maximize carryover indiscriminately. Scope, minimization, and leakage control are part of continuity quality, not side concerns.
+
+**Status:** Strong theory grounded by practical privacy risk.
+
 ---
 
 ## 4. Core Insight
