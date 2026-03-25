@@ -133,7 +133,7 @@ In short:
 
 This section summarizes what appears real today versus what is still theory.
 
-### 4.1 What appears real and already demonstrated
+### 5.1 What appears real and already demonstrated
 
 The following capabilities have been demonstrated in at least one serious implementation and should be treated as protocol-grounded reality:
 
@@ -161,7 +161,7 @@ The following capabilities have been demonstrated in at least one serious implem
 8. **Agent/work ownership and coordination pressure are continuity-relevant.**
    Continuity is not only about facts and summaries; live claims, conflicts, and coordination signals also matter.
 
-### 4.2 What is theory but increasingly plausible
+### 5.2 What is theory but increasingly plausible
 
 The following ideas are promising and aligned with observed systems, but should still be treated as theory rather than settled truth:
 
@@ -171,7 +171,7 @@ The following ideas are promising and aligned with observed systems, but should 
 4. A fixed conformance ladder can be standardized without overfitting to one implementation family.
 5. Continuity quality can be captured by a relatively small, stable benchmark metric set.
 
-### 4.3 What remains assumption
+### 5.3 What remains assumption
 
 The following should be treated as assumptions until broader validation exists:
 
