@@ -97,7 +97,33 @@ A system must not claim continuity success just because a human can still recove
 
 ---
 
-## 4. Reality Map
+## 4. Core Insight
+
+The core claim of this protocol should be explicit:
+
+> **Continuity is not the same thing as memory.**
+> Memory is stored or recoverable state. Continuity is the operational property that the right state survives a boundary in a truthful, bounded, and inspectable way.
+
+This leads to a second claim:
+
+> **Recoverability is not the same thing as survival.**
+> If a system can recover the answer later through a fallback path, that is useful â€” but it is not equivalent to having preserved the right continuity state at the boundary itself.
+
+And a third:
+
+> **Continuity should be evaluated as a work-preservation property, not as a storage feature.**
+> The protocol exists to preserve live work: decisions, constraints, incidents, scars, active ownership, and other state that prevents duplicate effort and operational confusion.
+
+In short:
+
+- **memory** answers: "what can still be retrieved?"
+- **continuity** answers: "what actually survived in the form needed for work to continue correctly?"
+
+**Status:** This framing is now strong enough to be treated as the central thesis of the draft.
+
+---
+
+## 5. Reality Map
 
 This section summarizes what appears real today versus what is still theory.
 
@@ -151,7 +177,7 @@ The following should be treated as assumptions until broader validation exists:
 
 ---
 
-## 5. Core Vocabulary
+## 6. Core Vocabulary
 
 ### 5.1 Continuity
 
@@ -187,7 +213,7 @@ A durable lesson derived from failure, conflict, breakage, or expensive confusio
 
 ---
 
-## 6. Continuity Item Model
+## 7. Continuity Item Model
 
 A continuity item is the fundamental protocol object.
 
@@ -264,7 +290,7 @@ Useful core scopes include:
 
 ---
 
-## 7. Context Model
+## 8. Context Model
 
 A continuity context is the protocol-level container for continuity-relevant state.
 
@@ -293,7 +319,7 @@ These are still implementation choices.
 
 ---
 
-## 8. Proof Capsule
+## 9. Proof Capsule
 
 ### 8.1 Definition
 
@@ -337,7 +363,7 @@ Labels such as `pf1`, `pd1`, `pk1`, `ps1`, `pn1` are useful conventions, but the
 
 ---
 
-## 9. Proof Path vs Control Path
+## 10. Proof Path vs Control Path
 
 This distinction is now central and should be treated as normative.
 
@@ -371,7 +397,7 @@ Without this distinction, systems will overclaim continuity simply because the a
 
 ---
 
-## 10. Compiled Continuity
+## 11. Compiled Continuity
 
 ### 10.1 Definition
 
@@ -407,7 +433,7 @@ Compiled continuity is **not** just lossy summarization. It is structured state 
 
 ---
 
-## 11. Retrieval Model
+## 12. Retrieval Model
 
 ### 11.1 Principle
 
@@ -444,7 +470,7 @@ This specification describes retrieval dimensions, not a mandatory formula.
 
 ---
 
-## 12. Event Memory vs Typed Continuity
+## 13. Event Memory vs Typed Continuity
 
 This distinction has become too important to leave implicit.
 
@@ -472,7 +498,7 @@ Whether and when raw event memory should be auto-promoted into typed continuity 
 
 ---
 
-## 13. Coordination State as Continuity
+## 14. Coordination State as Continuity
 
 The protocol should explicitly recognize that continuity is not only epistemic memory.
 
@@ -497,7 +523,7 @@ What remains open is how much of that coordination surface should be standardize
 
 ---
 
-## 14. Explanation and Observability
+## 15. Explanation and Observability
 
 A continuity system should not only surface state; it should also help explain:
 
@@ -513,7 +539,7 @@ Observability formats are implementation-specific, but explanation capability sh
 
 ---
 
-## 15. Evaluation Contract
+## 16. Evaluation Contract
 
 Continuity without falsification is branding.
 
@@ -558,7 +584,7 @@ Sealed or blind evaluation for external models is a strong protocol-aligned prac
 
 ---
 
-## 16. Conformance Levels
+## 17. Conformance Levels
 
 These levels are useful, but should be read as draft guidance rather than permanent law.
 
@@ -596,7 +622,7 @@ A Level 3 system should additionally:
 
 ---
 
-## 17. Non-Goals and Anti-Claims
+## 18. Non-Goals and Anti-Claims
 
 The Continuity Protocol does **not** claim that:
 
@@ -611,7 +637,7 @@ These anti-claims are now grounded enough to be considered part of the protocolâ
 
 ---
 
-## 18. Open Questions
+## 19. Open Questions
 
 The following are intentionally unresolved:
 
@@ -625,7 +651,7 @@ The following are intentionally unresolved:
 
 ---
 
-## 19. Practical Reading Guide
+## 20. Practical Reading Guide
 
 If you are implementing against this spec today, treat the following as the safest practical core:
 
