@@ -66,3 +66,26 @@ At minimum, serious implementations should make room for:
 - explicit retention behavior
 
 The protocol should not force one privacy architecture, but it should make unsafe ambiguity harder.
+
+## 9. Prompt injection via continuity-in-the-loop
+
+When continuity state is fed back into agent prompts — as context packs, extraction hints, or metacognitive guidance — a new attack surface emerges.
+
+### The finding
+
+A reference implementation (2026-03-26) was found to concatenate hypothesis text and lesson content directly into extraction prompts without sanitization. Any agent that writes a continuity item effectively controls part of the extraction prompt for future agents.
+
+### Why this matters for privacy
+
+- a compromised or confused agent can embed prompt injection payloads in continuity items
+- the attack operates through the memory layer, not through direct user input, making it harder to detect
+- cross-agent trust assumptions break: agent A writes a scar, agent B's extraction prompt includes it verbatim
+
+### Mitigation posture
+
+- treat all continuity item content as untrusted at the prompt boundary
+- structurally isolate continuity content from prompt control flow
+- do not assume items written by previous agents are benign
+- consider content-length limits and format validation for items that will be injected into prompts
+
+**Status:** This is a proven concern, not a theoretical risk. The vulnerable code was found in production-path functions during adversarial review.

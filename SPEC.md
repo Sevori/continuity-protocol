@@ -1,8 +1,8 @@
 # Continuity Protocol Specification
 
-**Version:** 0.2.0-draft  
-**Date:** 2026-03-25  
-**Status:** Draft, revised to separate proven behavior from theory and assumptions  
+**Version:** 0.3.0-draft
+**Date:** 2026-03-26
+**Status:** Draft, updated with metacognitive evaluation evidence and security findings
 **Author:** Renato Rodrigues de Araujo  
 **License:** CC-BY-4.0
 
@@ -161,6 +161,15 @@ The following capabilities have been demonstrated in at least one serious implem
 8. **Agent/work ownership and coordination pressure are continuity-relevant.**
    Continuity is not only about facts and summaries; live claims, conflicts, and coordination signals also matter.
 
+9. **Per-item survival analysis is implementable and produces actionable classification.**
+   A benchmark suite can classify each ground truth item as SURVIVED or LOST after a boundary crossing and extract features (keyword density, memory layer, continuity kind, retention status). This has been demonstrated across 10 benchmark classes producing 300+ survival records per suite run.
+
+10. **Differential decay by continuity kind is practical.**
+    Assigning different half-lives to different kinds (e.g. ephemeral working state decaying in hours, operational scars persisting for weeks) produces useful retention behavior. Resolved items decaying faster than open items is a workable and intuitive policy.
+
+11. **Continuity claims can be self-falsified.**
+    A system generated a statistical hypothesis about its own survival patterns ("items with higher keyword density survive better"), tested it via A/B injection into the extraction pipeline, and correctly rejected it as a ceiling artefact. The falsification mechanism works. This does not yet prove the mechanism produces net-positive improvements — only that it can avoid false positives.
+
 ### 5.2 What is theory but increasingly plausible
 
 The following ideas are promising and aligned with observed systems, but should still be treated as theory rather than settled truth:
@@ -170,6 +179,8 @@ The following ideas are promising and aligned with observed systems, but should 
 3. Hot/warm/cold compiled continuity will prove to be a widely reusable canonical model.
 4. A fixed conformance ladder can be standardized without overfitting to one implementation family.
 5. Continuity quality can be captured by a relatively small, stable benchmark metric set.
+6. Metacognitive self-evaluation — systems analysing their own forgetting patterns to generate hypotheses about what survives and why — can produce actionable improvements to continuity quality. The mechanism exists and can reject noise; whether it can find real signal remains unproven.
+7. Differential half-lives by continuity kind (shorter for ephemeral state, longer for scars and constraints) produce measurably better retention than uniform decay. Implemented and running, but not yet tested across multiple independent implementations.
 
 ### 5.3 What remains assumption
 
@@ -180,6 +191,8 @@ The following should be treated as assumptions until broader validation exists:
 3. exact register prefix conventions beyond their descriptive usefulness
 4. any claim that a particular benchmark suite is sufficient for full protocol validation
 5. any claim that a single storage or retrieval architecture is the canonical realization of the protocol
+6. whether metacognitive hypothesis generation produces net-positive improvements to continuity metrics (one test correctly rejected one hypothesis — mechanism exists, value unproven, n=1)
+7. whether adversarial multi-agent review processes (e.g. tribunal-style code review with integrity auditing) are a scalable continuity quality mechanism or an expensive novelty
 
 ---
 
@@ -582,7 +595,28 @@ A serious benchmark should:
 
 **Status:** Proven in principle.
 
-### 15.3 Blind evaluation
+### 15.3 Survival analysis as evaluation
+
+A benchmark suite can go beyond pass/fail by classifying each item as SURVIVED or LOST and extracting features about what correlates with survival. This produces a `SurvivalReport` — a per-item, per-boundary record of what the system kept and what it dropped.
+
+This has been demonstrated in practice:
+
+- 10 benchmark classes covering agent swap, strong-to-small continuation, crash recovery, memory pollution, and more
+- 300+ survival records per suite run with extracted features (keyword density, file path presence, continuity kind, memory layer, retention status)
+- statistical hypothesis generation via chi-squared proportion tests with FDR correction
+- one closed-loop A/B test that correctly rejected a hypothesis as a ceiling artefact
+
+**What this does NOT prove (yet):**
+
+- That metacognitive hypothesis generation produces net-positive improvements to continuity. The mechanism can avoid false positives, but no hypothesis has yet been validated as an improvement.
+- That the features extracted are the right features. The feature set is still implementation-local.
+- That the statistical tests are appropriate for small sample sizes. Chi-squared with Yates correction is unreliable for sparse cells (expected count < 5); Fisher's exact test is more appropriate but not yet standard.
+
+**Kill criterion from reference implementation:** If after 5 closed-loop cycles no survival metric improves by > 5% absolute, the patterns are noise.
+
+**Status:** The survival analysis mechanism is proven. The metacognitive closed loop is theory under active testing. The claim that it produces value is still assumption.
+
+### 15.4 Blind evaluation
 
 Sealed or blind evaluation for external models is a strong protocol-aligned practice, but should still be treated as a higher-maturity feature rather than a minimal requirement.
 
@@ -638,6 +672,7 @@ The Continuity Protocol does **not** claim that:
 4. all useful state should be treated equally
 5. any implementation with storage automatically has continuity
 6. replay and proof are the same thing
+7. continuity state fed back into agent prompts is automatically safe (see Section 20)
 
 These anti-claims are now grounded enough to be considered part of the protocol’s identity.
 
@@ -654,10 +689,44 @@ The following are intentionally unresolved:
 5. When should event memory be promoted into typed continuity?
 6. Which benchmark suite is sufficient for claiming broad protocol maturity?
 7. How much should numeric scoring be standardized versus left implementation-local?
+8. Can systems that analyse their own forgetting patterns (metacognitive survival analysis) produce measurable improvements to continuity quality, or is the signal too weak relative to noise?
+9. What are the security surfaces created by feeding continuity state back into agent extraction prompts? (See Section 20.)
+10. What is the right statistical test for survival analysis with small, sparse samples — and how many closed-loop cycles are needed to distinguish signal from noise?
+11. Should differential decay rates (by continuity kind and lifecycle status) be part of the protocol, or remain implementation-local?
 
 ---
 
-## 20. Practical Reading Guide
+## 20. Security: Continuity-in-the-Loop
+
+When continuity state is fed back into agent prompts — whether as context, extraction hints, or metacognitive guidance — it creates a novel attack surface.
+
+### 20.1 Prompt injection via continuity items
+
+A concrete finding from a reference implementation (2026-03-26): functions that render hypothesis text into extraction prompts concatenated continuity item content directly into the prompt without sanitization. Any agent that writes a continuity item controls part of the extraction prompt for future agents.
+
+This means:
+
+- a malicious or confused agent can craft continuity items that manipulate downstream extraction behaviour
+- hypothesis text, lesson content, or scar descriptions can contain prompt injection payloads
+- the attack is subtle because it operates through the memory layer, not through direct user input
+
+### 20.2 Normative implication
+
+A serious continuity system that feeds state back into agent prompts should:
+
+1. treat continuity item content as untrusted input at the prompt boundary
+2. sanitize or structurally isolate continuity content from prompt control flow
+3. not assume that items written by previous agents are benign
+
+### 20.3 Status
+
+This is a **proven security concern**, discovered during adversarial review of a closed-loop metacognitive implementation. It is not theoretical — the vulnerable code was found in production-path functions.
+
+The protocol does not prescribe a specific sanitization mechanism, but it should be explicit that continuity-in-the-loop introduces prompt injection risk that must be addressed by conforming implementations.
+
+---
+
+## 21. Practical Reading Guide
 
 If you are implementing against this spec today, treat the following as the safest practical core:
 
@@ -671,6 +740,9 @@ If you are implementing against this spec today, treat the following as the safe
 - multi-dimensional retrieval
 - provenance-aware explanation
 - truthful distinction between typed continuity and fallback memory
+- per-item survival analysis in benchmark evaluation
+- differential decay by continuity kind (longer for scars, shorter for ephemeral state)
+- sanitization of continuity content before prompt injection (Section 20)
 
 ### Treat this as strong theory
 
@@ -678,12 +750,14 @@ If you are implementing against this spec today, treat the following as the safe
 - exact conformance ladder semantics
 - stable canonical benchmark suite
 - exact hot/warm/cold policy portability across systems
+- metacognitive hypothesis generation from survival patterns (mechanism works, value unproven)
 
 ### Treat this as assumption
 
 - exact score weights
 - exact field optionality for every binding
 - exact numeric thresholds for salience, status boosts, or promotion
+- whether closed-loop metacognitive validation produces net-positive continuity improvements
 
 ---
 
@@ -751,3 +825,7 @@ Illustrative only.
 | Provenance | origin and support lineage of surfaced state |
 | Operational scar | durable lesson from failure |
 | Event fallback | truthful recovery from non-typed memory when typed continuity misses |
+| Survival analysis | per-item classification of what survived vs was lost across a boundary |
+| Metacognitive evaluation | a system analysing its own forgetting patterns to generate hypotheses about continuity |
+| Differential decay | varying retention half-lives by continuity kind and lifecycle status |
+| Continuity-in-the-loop | feeding continuity state back into agent prompts as context or extraction guidance |

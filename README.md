@@ -46,7 +46,10 @@ The protocol currently focuses on:
 - truthful distinction between continuity survival and fallback recovery
 - evaluation that can falsify continuity claims
 - privacy-aware continuity boundaries
+- per-item survival analysis and metacognitive evaluation (new in 0.3.0)
+- security of continuity-in-the-loop (feeding state back into prompts) (new in 0.3.0)
+- differential decay by continuity kind and lifecycle status (new in 0.3.0)
 
 ## Status
 
-Draft. Expected to evolve quickly.
+Draft (v0.3.0). Updated 2026-03-26 with metacognitive evaluation evidence and security findings from a reference implementation. Expected to evolve quickly.

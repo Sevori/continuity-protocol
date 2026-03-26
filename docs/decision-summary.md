@@ -69,3 +69,27 @@ The spec and supplemental docs do not rely on naming private repositories.
 ### Why
 
 The protocol should stand on its own and avoid leaking implementation-specific provenance that is not meant for public framing.
+
+## Decision 9 — Add survival analysis as evaluation evidence (v0.3.0)
+
+The spec now includes per-item survival analysis as a proven evaluation mechanism, with honest framing of what it does and does not demonstrate.
+
+### Why
+
+A reference implementation produced 300+ survival records per suite run across 10 benchmark classes. The mechanism is real. But the spec is careful not to claim that metacognitive hypothesis generation produces value — only that the mechanism exists and can reject noise. The kill criterion (5 cycles, > 5% absolute improvement) is included to prevent unfalsifiable claims.
+
+## Decision 10 — Add security section for continuity-in-the-loop (v0.3.0)
+
+The spec now explicitly warns that feeding continuity state back into agent prompts creates a prompt injection attack surface.
+
+### Why
+
+This was a concrete finding from adversarial review: functions that render hypothesis text into extraction prompts concatenated content without sanitization. The protocol should not prescribe a sanitization mechanism, but it should make the risk explicit so implementers do not ignore it.
+
+## Decision 11 — Include differential decay as proven, not prescriptive (v0.3.0)
+
+The spec acknowledges that differential decay by continuity kind is practical and running, but keeps exact half-lives as implementation-local.
+
+### Why
+
+The principle is grounded (scars should persist longer than ephemeral state). The specific numbers (720h for scars, 18h for working state) are one implementation's choice, not protocol law.
