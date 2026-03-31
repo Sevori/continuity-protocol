@@ -58,10 +58,10 @@ The protocol currently focuses on:
 - implicit operational-state recall for plan/status/blockers/next-step prompts even without explicit current/live/latest wording
 - a next-step channel that prioritizes working-state items like `model-next-step` ahead of generic guidance when the prompt asks what to do now
 - recent-update recall for recent progress, latest decisions, latest lessons, what changed, and continue-from-here resumptions
-- learning digests and full learning lineage as first-class read surfaces
-- stale open guidance retirement in normal recall while preserving full history on demand
+- active-thread recall for vague resumption and verification prompts so the freshest validated task-local decision outranks stale shared lexical debris
 - telemetry that distinguishes explicit current-state seeding from implicit operational-state seeding and recent-update seeding
+- telemetry that distinguishes explicit current-state seeding, implicit operational-state seeding, recent-update seeding, and active-thread seeding
 
 ## Status
 
-Draft (v0.3.2). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, current-practice evidence-chain carry-through, implicit operational-state recall semantics, and recent-update recall semantics from a reference implementation. Expected to evolve quickly.
+Draft (v0.3.3). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, current-practice evidence-chain carry-through, implicit operational-state recall semantics, recent-update recall semantics, and active-thread recall semantics from a reference implementation. Expected to evolve quickly.

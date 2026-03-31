@@ -598,6 +598,9 @@ The protocol should treat active operating guidance as a derived projection rath
 - When an objective asks for recent progress, latest decisions, latest lessons, what changed, or continue-from-here style resumptions, recall SHOULD seed from recent-update state before general lexical matching so recent high-signal pivots outrank stale lexical anchors.
 - Recent-update recall SHOULD prioritize recently validated active guidance and high-signal learning pivots while keeping stale lexical anchors as fallback rather than the primary driver.
 - Recent-update seeding MUST remain a distinct telemetry path so implementations can measure whether the recall win came from recent-update, explicit current-state, or implicit operational-state seeding.
+- When an objective is a vague resumption or verification prompt, recall SHOULD seed from the active local thread before general lexical matching so the freshest validated task-local decision outranks stale shared lexical debris.
+- Active-thread recall SHOULD prioritize the newest validated local decision or lesson on the current task, while keeping broader operational and recent-update priors available as fallback when the thread is not clearly local.
+- Active-thread seeding MUST remain a distinct telemetry path so implementations can measure whether the recall win came from the active local thread instead of lexical fallback or other operating priors.
 - When `current_practice` is carried into a context pack, the protocol SHOULD carry the strongest bounded provenance-backed evidence chain for each live practice item alongside the item itself.
 - Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement SHOULD stop counting as live operating pressure in default reads.
 - Historical guidance MUST remain available for provenance and learning-line reconstruction. The protocol may not fake recency by deleting lineage.
@@ -619,9 +622,10 @@ The protocol's control surfaces should expose current practice and learning with
 
 - `read_context(context, detail)` SHOULD return current continuity items, compiled state, `current_practice`, `learning`, active claims, coordination signals, and organism snapshot.
 - `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, and retrieval timings.
-- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, retrieval timings, and telemetry that distinguishes explicit current-state seeding, implicit operational-state seeding, and recent-update seeding.
+- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, retrieval timings, and telemetry that distinguishes explicit current-state seeding, implicit operational-state seeding, recent-update seeding, and active-thread seeding.
 - `recall` SHOULD preserve a next-step channel so immediate-action prompts can surface the most recent working-state item separately from broader operational guidance.
 - `recall` SHOULD preserve a recent-update channel so recent-progress prompts can surface the latest validated pivots separately from broader operational guidance and from the learning lineage view.
+- `recall` SHOULD preserve an active-thread channel so vague resumption and verification prompts can surface the freshest validated local decision separately from broader operational guidance and from the learning lineage view.
 - `compact` SHOULD be the default detail mode for read-heavy bindings, while `full` is reserved for inspection and diagnostics.
 - Compact projections MUST preserve `answer_hint`, `answer_hint_item_id`, item identity, ranking order, `support_count`, and `superseded_by` where present.
 - Human-readable text SHOULD stay short and should not repeat the full structured payload.
