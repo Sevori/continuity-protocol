@@ -81,7 +81,15 @@ A mature retrieval system should combine:
 
 This is how memory infrastructure becomes continuity-aware.
 
-## 5. Important distinction
+## 5. Selector-scoped packs
+
+A selector is a hard isolation boundary for context-pack construction, not a ranking hint.
+
+If `build_context_pack` receives a selector, lexical, vector, lineage, and recalled-continuity candidates must all be filtered inside that selector before they can reach the final pack.
+
+Strong matches from foreign task, namespace, or context scopes are still foreign and must not leak into the pack.
+
+## 6. Important distinction
 
 Memory infrastructure answers:
 - how can state be stored and found?

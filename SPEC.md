@@ -351,6 +351,8 @@ A context may include:
 ### 7.1 What is real
 
 It is already real that continuity systems need some isolation boundary stronger than “whatever is nearby in storage”.
+Where a selector is supplied to `build_context_pack`, that selector is the isolation boundary for the entire pack, not a ranking hint.
+No out-of-scope item may be merged into the pack simply because it scores well on lexical, vector, lineage, or recalled-continuity signals.
 
 ### 7.2 What remains open
 
@@ -514,6 +516,16 @@ The following are proven enough to influence the spec:
 Exact score weights are not standardized by this spec.
 
 This specification describes retrieval dimensions, not a mandatory formula.
+
+### 11.4 Selector semantics
+
+When `build_context_pack` receives a selector, the selector is a hard isolation bound for the whole pack.
+
+All candidate sources merged into the final pack, including lexical, vector, lineage, and recalled continuity sources, MUST be filtered inside that bound before selection and packing.
+
+Selector-scoped reads MUST NOT leak foreign task, namespace, project, or context items into the final pack, even if those items are stronger elsewhere on lexical, semantic, or lineage signals.
+
+The selector is a boundary, not a ranking hint.
 
 ---
 

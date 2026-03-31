@@ -55,6 +55,7 @@ The protocol currently focuses on:
 - live-state recall seeding from current practice before general lexical matching
 - learning digests and full learning lineage as first-class read surfaces
 - stale semantic debris demotion in normal recall and context packs while preserving full history on demand
+- selector-scoped context packs using hard isolation bounds across lexical, vector, lineage, and recalled continuity sources
 - implicit operational-state recall for plan/status/blockers/next-step prompts even without explicit current/live/latest wording
 - a next-step channel that prioritizes working-state items like `model-next-step` ahead of generic guidance when the prompt asks what to do now
 - recent-update recall for recent progress, latest decisions, latest lessons, what changed, and continue-from-here resumptions
@@ -64,4 +65,4 @@ The protocol currently focuses on:
 
 ## Status
 
-Draft (v0.3.3). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, current-practice evidence-chain carry-through, implicit operational-state recall semantics, recent-update recall semantics, active-thread recall semantics, and stale semantic debris demotion semantics from a reference implementation. Expected to evolve quickly.
+Draft (v0.3.3). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, current-practice evidence-chain carry-through, implicit operational-state recall semantics, recent-update recall semantics, active-thread recall semantics, selector-scoped hard isolation semantics, and stale semantic debris demotion semantics from a reference implementation. Expected to evolve quickly.
