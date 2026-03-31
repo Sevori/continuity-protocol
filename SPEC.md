@@ -258,6 +258,7 @@ A conforming implementation should represent, explicitly or losslessly, at least
 | `support_ids` | Supporting lineage references | Proven |
 | `salience` | Relative importance signal | Proven |
 | `confidence` | Confidence signal | Proven |
+| `supersedes_id` | Explicit lineage to the continuity item this item replaces | Proven |
 
 ### 6.2 Core continuity kinds
 
@@ -306,6 +307,15 @@ Useful core scopes include:
 - `global`
 
 **Status:** Proven as a useful pattern, though exact scope semantics remain binding-specific.
+
+### 6.5 Supersession Lineage
+
+Supersession is a first-class continuity transition, not an implementation detail.
+
+- When a newer item replaces an older one, the newer item MAY declare `supersedes_id`.
+- Read-oriented projections SHOULD expose `superseded_by` when it is cheaply derivable so agents can detect stale state without a second round trip.
+- Compact read projections MUST preserve enough supersession information to distinguish "still active" from "shown only for lineage."
+
 
 ---
 
@@ -463,6 +473,8 @@ A useful retrieval system may consider:
 - kind
 - status
 - scope
+- practice_state
+- support_signal
 - lexical match
 - semantic similarity
 - lineage proximity
@@ -556,6 +568,37 @@ A continuity system should not only surface state; it should also help explain:
 
 Observability formats are implementation-specific, but explanation capability should be considered part of serious protocol conformance.
 
+### 15.1 Current Practice Projection
+
+The protocol should treat active operating guidance as a derived projection rather than a raw list of recent decisions.
+
+- `current_practice` summarizes the active operating guidance for a context or task.
+- The projection SHOULD retain `items` plus a compact evidence bundle for each live practice item, including the supporting lessons, outcomes, or decisions that justify it.
+- Each evidence bundle SHOULD expose at least `support_signal`, `evidence_count`, and the supporting continuity items themselves.
+- Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement SHOULD stop counting as live operating pressure in default reads.
+- Historical guidance MUST remain available for provenance and learning-line reconstruction. The protocol may not fake recency by deleting lineage.
+- When the objective explicitly asks for history, timeline, lineage, evolution, or why a practice changed, implementations SHOULD relax stale-guidance suppression so the full operating line can be reconstructed.
+
+### 15.2 Learning Projection
+
+The protocol should also expose learning as a first-class projection derived from continuity.
+
+- The default learning view SHOULD surface the newest learnings first so an agent can answer "what did we learn recently?" without reconstructing chronology manually.
+- The learning view MUST support a lineage mode. When the objective explicitly asks for history, timeline, evolution, lineage, or "what we learned over time", implementations SHOULD return the full learning line in chronological order.
+- The learning view SHOULD be derived from continuity kinds that represent actual adaptation pressure, especially `lesson`, `outcome`, `decision`, `incident`, and `operational_scar`.
+- The lineage learning view SHOULD preserve sequence. It MUST help an agent explain how current practice emerged from earlier mistakes, decisions, outcomes, and lessons.
+
+### 15.3 Control Surfaces
+
+The protocol's control surfaces should expose current practice and learning without duplicating the same payload in multiple forms.
+
+- `read_context(context, detail)` SHOULD return current continuity items, compiled state, `current_practice`, `learning`, active claims, coordination signals, and organism snapshot.
+- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, and retrieval timings.
+- `compact` SHOULD be the default detail mode for read-heavy bindings, while `full` is reserved for inspection and diagnostics.
+- Compact projections MUST preserve `answer_hint`, `answer_hint_item_id`, item identity, ranking order, `support_count`, and `superseded_by` where present.
+- Human-readable text SHOULD stay short and should not repeat the full structured payload.
+
+
 ---
 
 ## 16. Evaluation Contract
@@ -646,6 +689,7 @@ A Level 2 system should additionally:
 - support compiled continuity or equivalent bounded recall projection
 - support explanation / provenance surfaces
 - support multi-dimensional retrieval
+- expose `current_practice` and `learning` projections, including default and lineage modes
 - support evaluation labeling for proof vs control paths
 
 **Status:** Reasonable and grounded.

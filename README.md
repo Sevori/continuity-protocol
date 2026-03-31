@@ -49,6 +49,10 @@ The protocol currently focuses on:
 - per-item survival analysis and metacognitive evaluation (new in 0.3.0)
 - security of continuity-in-the-loop (feeding state back into prompts) (new in 0.3.0)
 - differential decay by continuity kind and lifecycle status (new in 0.3.0)
+- explicit `supersedes` lineage for belief and guidance updates
+- current-practice projection as a first-class read surface
+- learning digests and full learning lineage as first-class read surfaces
+- stale open guidance retirement in normal recall while preserving full history on demand
 
 ## Status
 
