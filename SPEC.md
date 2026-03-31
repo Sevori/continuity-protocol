@@ -305,9 +305,10 @@ Useful derived states include:
 | `current` | the guidance or practice that should be followed now | Proven in at least one serious implementation |
 | `aging` | still potentially live, but no longer strongly backed | Theory leaning proven |
 | `stale` | likely too old or weak to drive default behavior | Theory leaning proven |
+| `stale semantic debris` | ancient open/active guidance that is stale or retired, weakly reinforced, unsupported, and surviving mostly by lexical overlap | Theory leaning proven |
 | `retired` | superseded, rejected, or no longer fit for default recall | Proven in at least one serious implementation |
 
-This lifecycle is derived, not a replacement for the raw item status. A superseded decision may still exist for provenance while being treated as `retired` in default recall.
+This lifecycle is derived, not a replacement for the raw item status. A superseded decision may still exist for provenance while being treated as `retired` in default recall. Stale semantic debris SHOULD be demoted in default recall and context-pack compilation, with stronger suppression for shared-scope debris than task-local debris. History or lineage reads MAY still surface it when reconstructing the operating line.
 
 ### 6.5 Scope
 
@@ -455,7 +456,7 @@ The following are already grounded in reality:
 - not every mutation should trigger a full rebuild
 - bounded projections outperform transcript replay for many continuity tasks
 - support lineage can influence rank and surfacing
-- duplicate or low-value echoes need suppression
+- duplicate or low-value echoes and stale semantic debris need suppression
 
 ### 10.3 Common band model
 
@@ -590,7 +591,7 @@ The protocol should treat active operating guidance as a derived projection rath
 - `current_practice` summarizes the active operating guidance for a context or task.
 - The projection SHOULD retain `items` plus a compact evidence bundle for each live practice item, including the supporting lessons, outcomes, or decisions that justify it.
 - Each evidence bundle SHOULD expose at least `support_signal`, `evidence_count`, and the supporting continuity items themselves.
-- When an objective explicitly asks for current, live, latest, or active state, recall SHOULD seed from derived current practice before general lexical matching so active recent guidance outranks stale lexical debris.
+- When an objective explicitly asks for current, live, latest, or active state, recall SHOULD seed from derived current practice before general lexical matching so active recent guidance outranks stale semantic debris.
 - When an objective implicitly asks for operational state, such as plan, status, blockers, next step, priorities, or what to do now, recall SHOULD seed from live operational state even if the wording does not contain current, live, or latest.
 - Implicit operational-state recall SHOULD combine current_practice with bounded operational pressure, including next-step working state, active blockers, live coordination pressure, and non-stale open guidance.
 - A next-step-specific channel SHOULD be distinct from the broader operational-state path so immediate-action prompts can prioritize working-state items like `model-next-step` before generic guidance.
@@ -598,11 +599,12 @@ The protocol should treat active operating guidance as a derived projection rath
 - When an objective asks for recent progress, latest decisions, latest lessons, what changed, or continue-from-here style resumptions, recall SHOULD seed from recent-update state before general lexical matching so recent high-signal pivots outrank stale lexical anchors.
 - Recent-update recall SHOULD prioritize recently validated active guidance and high-signal learning pivots while keeping stale lexical anchors as fallback rather than the primary driver.
 - Recent-update seeding MUST remain a distinct telemetry path so implementations can measure whether the recall win came from recent-update, explicit current-state, or implicit operational-state seeding.
-- When an objective is a vague resumption or verification prompt, recall SHOULD seed from the active local thread before general lexical matching so the freshest validated task-local decision outranks stale shared lexical debris.
+- When an objective is a vague resumption or verification prompt, recall SHOULD seed from the active local thread before general lexical matching so the freshest validated task-local decision outranks stale shared semantic debris.
 - Active-thread recall SHOULD prioritize the newest validated local decision or lesson on the current task, while keeping broader operational and recent-update priors available as fallback when the thread is not clearly local.
 - Active-thread seeding MUST remain a distinct telemetry path so implementations can measure whether the recall win came from the active local thread instead of lexical fallback or other operating priors.
 - When `current_practice` is carried into a context pack, the protocol SHOULD carry the strongest bounded provenance-backed evidence chain for each live practice item alongside the item itself.
-- Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement SHOULD stop counting as live operating pressure in default reads.
+- Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement, and that survive mostly by lexical overlap, SHOULD be treated as stale semantic debris and stop counting as live operating pressure in default reads.
+- Default recall and compiled context packs SHOULD demote stale semantic debris, with stronger demotion for shared-scope debris than task-local debris.
 - Historical guidance MUST remain available for provenance and learning-line reconstruction. The protocol may not fake recency by deleting lineage.
 - History, timeline, lineage, evolution, or why-a-practice-changed requests SHOULD reopen the full operating line instead of suppressing older practice competitors.
 
@@ -622,7 +624,7 @@ The protocol's control surfaces should expose current practice and learning with
 
 - `read_context(context, detail)` SHOULD return current continuity items, compiled state, `current_practice`, `learning`, active claims, coordination signals, and organism snapshot.
 - `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, and retrieval timings.
-- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, retrieval timings, and telemetry that distinguishes explicit current-state seeding, implicit operational-state seeding, recent-update seeding, and active-thread seeding.
+- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, retrieval timings, and telemetry that distinguishes explicit current-state seeding, implicit operational-state seeding, recent-update seeding, and active-thread seeding, including the number of candidates demoted as stale semantic debris.
 - `recall` SHOULD preserve a next-step channel so immediate-action prompts can surface the most recent working-state item separately from broader operational guidance.
 - `recall` SHOULD preserve a recent-update channel so recent-progress prompts can surface the latest validated pivots separately from broader operational guidance and from the learning lineage view.
 - `recall` SHOULD preserve an active-thread channel so vague resumption and verification prompts can surface the freshest validated local decision separately from broader operational guidance and from the learning lineage view.
@@ -819,7 +821,7 @@ If you are implementing against this spec today, treat the following as the safe
 - truthful distinction between typed continuity and fallback memory
 - current-practice projection with evidence-backed active guidance
 - learning projection with both recent digest and full lineage modes
-- stale open guidance retirement in default operating reads
+- stale semantic debris demotion in default operating reads
 - per-item survival analysis in benchmark evaluation
 - differential decay by continuity kind (longer for scars, shorter for ephemeral state)
 - sanitization of continuity content before prompt injection (Section 20)

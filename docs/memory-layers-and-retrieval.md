@@ -41,6 +41,8 @@ Embeddings are useful because they allow semantic recall beyond exact lexical ov
 
 But embeddings alone are not continuity.
 
+In default recall, embeddings should not keep ancient open or active guidance alive just because it still overlaps lexically. That kind of state becomes stale semantic debris and should be demoted in the compiled projection. History or lineage requests can still keep it available for reconstruction.
+
 They help answer:
 - what is semantically similar?
 
@@ -75,6 +77,7 @@ A mature retrieval system should combine:
 - scope / namespace / task fit
 - lineage support
 - salience
+- stale semantic debris demotion, with stronger suppression for shared-scope debris than task-local debris
 
 This is how memory infrastructure becomes continuity-aware.
 
