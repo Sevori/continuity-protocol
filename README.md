@@ -53,9 +53,12 @@ The protocol currently focuses on:
 - current-practice projection as a first-class read surface
 - current-practice packs carrying a bounded provenance-backed evidence chain
 - live-state recall seeding from current practice before general lexical matching
+- implicit operational-state recall for plan/status/blockers/next-step prompts even without explicit current/live/latest wording
+- a next-step channel that prioritizes working-state items like `model-next-step` ahead of generic guidance when the prompt asks what to do now
 - learning digests and full learning lineage as first-class read surfaces
 - stale open guidance retirement in normal recall while preserving full history on demand
+- telemetry that distinguishes explicit current-state seeding from implicit operational-state seeding
 
 ## Status
 
-Draft (v0.3.0). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, and current-practice evidence-chain carry-through from a reference implementation. Expected to evolve quickly.
+Draft (v0.3.1). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, current-practice evidence-chain carry-through, and implicit operational-state recall semantics from a reference implementation. Expected to evolve quickly.

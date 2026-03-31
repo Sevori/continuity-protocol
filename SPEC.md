@@ -1,8 +1,8 @@
 # Continuity Protocol Specification
 
-**Version:** 0.3.0-draft
+**Version:** 0.3.1-draft
 **Date:** 2026-03-31
-**Status:** Draft, updated with metacognitive evaluation evidence and security findings
+**Status:** Draft, updated with metacognitive evaluation evidence, security findings, and operational-state recall semantics
 **Author:** Renato Rodrigues de Araujo  
 **License:** CC-BY-4.0
 
@@ -591,6 +591,10 @@ The protocol should treat active operating guidance as a derived projection rath
 - The projection SHOULD retain `items` plus a compact evidence bundle for each live practice item, including the supporting lessons, outcomes, or decisions that justify it.
 - Each evidence bundle SHOULD expose at least `support_signal`, `evidence_count`, and the supporting continuity items themselves.
 - When an objective explicitly asks for current, live, latest, or active state, recall SHOULD seed from derived current practice before general lexical matching so active recent guidance outranks stale lexical debris.
+- When an objective implicitly asks for operational state, such as plan, status, blockers, next step, priorities, or what to do now, recall SHOULD seed from live operational state even if the wording does not contain current, live, or latest.
+- Implicit operational-state recall SHOULD combine current_practice with bounded operational pressure, including next-step working state, active blockers, live coordination pressure, and non-stale open guidance.
+- A next-step-specific channel SHOULD be distinct from the broader operational-state path so immediate-action prompts can prioritize working-state items like `model-next-step` before generic guidance.
+- Explicit current-state seeding and implicit operational-state seeding MUST remain distinct telemetry paths so implementations can measure which prior produced the recall win.
 - When `current_practice` is carried into a context pack, the protocol SHOULD carry the strongest bounded provenance-backed evidence chain for each live practice item alongside the item itself.
 - Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement SHOULD stop counting as live operating pressure in default reads.
 - Historical guidance MUST remain available for provenance and learning-line reconstruction. The protocol may not fake recency by deleting lineage.
@@ -610,7 +614,8 @@ The protocol should also expose learning as a first-class projection derived fro
 The protocol's control surfaces should expose current practice and learning without duplicating the same payload in multiple forms.
 
 - `read_context(context, detail)` SHOULD return current continuity items, compiled state, `current_practice`, `learning`, active claims, coordination signals, and organism snapshot.
-- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, and retrieval timings.
+- `recall(context, query_text, budget_tokens, detail)` SHOULD return ranked continuity hits, `answer_hint`, candidate counts, compiler metadata, retrieval timings, and telemetry that distinguishes explicit current-state seeding from implicit operational-state seeding.
+- `recall` SHOULD preserve a next-step channel so immediate-action prompts can surface the most recent working-state item separately from broader operational guidance.
 - `compact` SHOULD be the default detail mode for read-heavy bindings, while `full` is reserved for inspection and diagnostics.
 - Compact projections MUST preserve `answer_hint`, `answer_hint_item_id`, item identity, ranking order, `support_count`, and `superseded_by` where present.
 - Human-readable text SHOULD stay short and should not repeat the full structured payload.

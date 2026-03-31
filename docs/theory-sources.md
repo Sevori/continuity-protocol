@@ -57,8 +57,14 @@ This comes from real retrieval practice:
 - recency matters
 - scope/task fit matters
 - lineage/support fit matters
+- operational intent matters, especially when a prompt asks for plan, status, blockers, next steps, or priorities without saying "current"
 
 This is why the spec treats multi-dimensional retrieval as core rather than optional decoration.
+
+The current implementation also separates two operational priors:
+
+- a broader live-state prior that seeds from `current_practice`
+- a narrower next-step prior that can elevate the freshest working-state item when an immediate-action prompt is asking what to do next
 
 ## 5. Multi-agent coordination practice
 
