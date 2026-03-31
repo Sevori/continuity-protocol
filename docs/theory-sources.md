@@ -60,6 +60,13 @@ This comes from real retrieval practice:
 
 This is why the spec treats multi-dimensional retrieval as core rather than optional decoration.
 
+The current implementation also separates two operational priors:
+
+- a broader live-state prior that seeds from `current_practice`
+- a narrower next-step prior that can elevate the freshest working-state item when an immediate-action prompt is asking what to do next
+- a recent-update prior that seeds from the newest high-signal pivots and recently validated guidance when the prompt is asking about recent progress, latest decisions, latest lessons, or what changed
+
+This keeps recent-update retrieval distinct from both live-state and next-step retrieval: live-state answers "what is active now", next-step answers "what should happen next", and recent-update answers "what materially changed most recently".
 ## 5. Multi-agent coordination practice
 
 Single-agent memory is not sufficient once several workers, agents, or sessions are involved.
