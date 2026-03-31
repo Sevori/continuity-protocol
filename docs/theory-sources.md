@@ -65,8 +65,9 @@ The current implementation also separates two operational priors:
 - a broader live-state prior that seeds from `current_practice`
 - a narrower next-step prior that can elevate the freshest working-state item when an immediate-action prompt is asking what to do next
 - a recent-update prior that seeds from the newest high-signal pivots and recently validated guidance when the prompt is asking about recent progress, latest decisions, latest lessons, or what changed
+- an active-thread prior that seeds from the freshest validated local decision or lesson when the prompt is a vague resumption or verification of the current work thread
 
-This keeps recent-update retrieval distinct from both live-state and next-step retrieval: live-state answers "what is active now", next-step answers "what should happen next", and recent-update answers "what materially changed most recently".
+This keeps the priors distinct from one another: live-state answers "what is active now", next-step answers "what should happen next", recent-update answers "what materially changed most recently", and active-thread answers "what should I resume in this thread".
 ## 5. Multi-agent coordination practice
 
 Single-agent memory is not sufficient once several workers, agents, or sessions are involved.
