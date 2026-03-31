@@ -294,7 +294,22 @@ These statuses are useful and already reflected in real systems:
 
 **Important:** exact numeric boosts for these statuses are still assumptions unless backed by benchmark evidence.
 
-### 6.4 Scope
+### 6.4 Derived practice lifecycle
+
+Some implementations derive an additional lifecycle for guidance-like continuity so default recall can favor what is operationally live without deleting lineage.
+
+Useful derived states include:
+
+| Derived state | Meaning | Status of concept |
+|---|---|---|
+| `current` | the guidance or practice that should be followed now | Proven in at least one serious implementation |
+| `aging` | still potentially live, but no longer strongly backed | Theory leaning proven |
+| `stale` | likely too old or weak to drive default behavior | Theory leaning proven |
+| `retired` | superseded, rejected, or no longer fit for default recall | Proven in at least one serious implementation |
+
+This lifecycle is derived, not a replacement for the raw item status. A superseded decision may still exist for provenance while being treated as `retired` in default recall.
+
+### 6.5 Scope
 
 Scope determines who may see or reuse continuity state.
 
@@ -308,7 +323,7 @@ Useful core scopes include:
 
 **Status:** Proven as a useful pattern, though exact scope semantics remain binding-specific.
 
-### 6.5 Supersession Lineage
+### 6.6 Supersession Lineage
 
 Supersession is a first-class continuity transition, not an implementation detail.
 
@@ -737,6 +752,7 @@ The following are intentionally unresolved:
 9. What are the security surfaces created by feeding continuity state back into agent extraction prompts? (See Section 20.)
 10. What is the right statistical test for survival analysis with small, sparse samples — and how many closed-loop cycles are needed to distinguish signal from noise?
 11. Should differential decay rates (by continuity kind and lifecycle status) be part of the protocol, or remain implementation-local?
+12. Which parts of `current_practice` and `learning` should be standardized as protocol read surfaces versus left as implementation-local projections?
 
 ---
 
@@ -784,6 +800,9 @@ If you are implementing against this spec today, treat the following as the safe
 - multi-dimensional retrieval
 - provenance-aware explanation
 - truthful distinction between typed continuity and fallback memory
+- current-practice projection with evidence-backed active guidance
+- learning projection with both recent digest and full lineage modes
+- stale open guidance retirement in default operating reads
 - per-item survival analysis in benchmark evaluation
 - differential decay by continuity kind (longer for scars, shorter for ephemeral state)
 - sanitization of continuity content before prompt injection (Section 20)
@@ -823,6 +842,7 @@ This appendix is illustrative, not normative.
   "namespace": "default",
   "task_id": "continuity-spec",
   "support_ids": ["uuid-v7-2"],
+  "supersedes_id": null,
   "salience": 0.91,
   "confidence": 0.87,
   "created_at": "2026-03-25T12:00:00Z",
