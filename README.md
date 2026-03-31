@@ -51,9 +51,10 @@ The protocol currently focuses on:
 - differential decay by continuity kind and lifecycle status (new in 0.3.0)
 - explicit `supersedes` lineage for belief and guidance updates
 - current-practice projection as a first-class read surface
+- current-practice packs carrying a bounded provenance-backed evidence chain
 - learning digests and full learning lineage as first-class read surfaces
 - stale open guidance retirement in normal recall while preserving full history on demand
 
 ## Status
 
-Draft (v0.3.0). Updated 2026-03-26 with metacognitive evaluation evidence and security findings from a reference implementation. Expected to evolve quickly.
+Draft (v0.3.0). Updated 2026-03-31 with metacognitive evaluation evidence, security findings, and current-practice evidence-chain carry-through from a reference implementation. Expected to evolve quickly.

@@ -590,6 +590,7 @@ The protocol should treat active operating guidance as a derived projection rath
 - `current_practice` summarizes the active operating guidance for a context or task.
 - The projection SHOULD retain `items` plus a compact evidence bundle for each live practice item, including the supporting lessons, outcomes, or decisions that justify it.
 - Each evidence bundle SHOULD expose at least `support_signal`, `evidence_count`, and the supporting continuity items themselves.
+- When `current_practice` is carried into a context pack, the protocol SHOULD carry the strongest bounded provenance-backed evidence chain for each live practice item alongside the item itself.
 - Guidance-like items that remain `open` or `active` but age past a retirement horizon without recent reinforcement SHOULD stop counting as live operating pressure in default reads.
 - Historical guidance MUST remain available for provenance and learning-line reconstruction. The protocol may not fake recency by deleting lineage.
 - When the objective explicitly asks for history, timeline, lineage, evolution, or why a practice changed, implementations SHOULD relax stale-guidance suppression so the full operating line can be reconstructed.
