@@ -52,6 +52,7 @@ The protocol currently focuses on:
 - explicit `supersedes` lineage for belief and guidance updates
 - current-practice projection as a first-class read surface
 - current-practice packs carrying a bounded provenance-backed evidence chain
+- live-state recall seeding from current practice before general lexical matching
 - learning digests and full learning lineage as first-class read surfaces
 - stale open guidance retirement in normal recall while preserving full history on demand
 
